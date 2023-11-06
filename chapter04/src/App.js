@@ -69,7 +69,9 @@ class IssueAdd extends React.Component {
         e.preventDefault();
         const form = document.forms.issueAdd;
         const issue = {
-            owner: form.owner.value, title: form.title.value, status: 'New',
+            owner: form.owner.value, 
+            title: form.title.value, 
+            status: 'New',
         }
         this.props.createIssue(issue);
         form.owner.value = ""; form.title.value = "";
