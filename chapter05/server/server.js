@@ -41,7 +41,7 @@ function issueList() {
 
 //initialising graphql server
 const server = new ApolloServer({
-    typeDefs: fs.readFileSync('./server/schema.graphql', 'utf8'),
+    typeDefs: fs.readFileSync('./server/schema.graphql', 'utf-8'),
     resolvers,
 });
 
