@@ -1,37 +1,47 @@
+//importing fs module and the readFileSync function to read the file.
+const fs = require('fs');
 const express = require('express');
 const { ApolloServer, ApolloError } = require('apollo-server-express');
 const { types } = require('@babel/core');
 //string our request should return
 let aboutMessage = 'Issue Tracker API v1.0';
 
-//schema
-const typeDefs = 
-//Query allows for the reading of data
-//Mutation allows for the adding and deleting of data
-`type Query {
-    about: String!
-}
-type Mutation{
-    setAboutMessage(message: String!): String
-}`;
+const issuesDB = [
+    {
+        id: 1, status: 'New', owner: 'Ravan', effort: 5,
+        created: new Date('2019-01-15'), due: undefined,
+        title: 'Error in console when clicking Add',
+    },
+    {
+        id: 2, status: 'Assigned', owner: 'Eddie', effort: 14,
+        created: new Date('2019-01-16'), due: new Date('2019-02-01'),
+        title: 'Missing bottom border on panel',
+    },
+];
 
 const resolvers = {
     Query: {
-        about:() => aboutMessage,
+        about: () => aboutMessage,
+        issueList,
     },
     Mutation: {
         //can change message in this field
         setAboutMessage
     },
 };
+
 //fieldName(obj, args, context)
-function setAboutMessage(_, {message}) {
+function setAboutMessage(_, { message }) {
     return aboutMessage = message;
+};
+
+function issueList() {
+    return issuesDB;
 };
 
 //initialising graphql server
 const server = new ApolloServer({
-    typeDefs,
+    typeDefs: fs.readFileSync('./server/schema.graphql', 'utf8'),
     resolvers,
 });
 
