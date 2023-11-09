@@ -49,3 +49,17 @@ server.applyMiddleware({ app, path: '/graphql' });
 app.listen(3000, function () {
   console.log('App started on port 3000');
 });
+
+//graphql queries to test
+
+// query {
+//   about
+// }
+
+// query {
+//   issueList {
+//     id
+//     title
+//     created
+//   }
+// }
