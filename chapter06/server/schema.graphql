@@ -8,7 +8,7 @@ enum StatusType {
 }
 
 type Issue {
-  id: Int!
+  _id: ID!
   title: String!
   status: StatusType!
   owner: String

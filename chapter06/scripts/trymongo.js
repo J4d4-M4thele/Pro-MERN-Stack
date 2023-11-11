@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 
-const url = 'mongodb://127.0.0.1/issuetracker';
+const url = 'mongodb://127.0.0.1:27017/issuetracker';
 
 // Atlas URL - replace UUU with user, PPP with password, XXX with hostname
 // const url = 'mongodb+srv://UUU:PPP@cluster0-XXX.mongodb.net/issuetracker?retryWrites=true';
@@ -79,3 +79,5 @@ testWithCallbacks((err) => {
     }
     testWithAsync();
 });
+
+//node scripts/trymongo.js

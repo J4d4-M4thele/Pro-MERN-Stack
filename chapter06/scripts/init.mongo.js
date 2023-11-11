@@ -10,7 +10,6 @@ scripts/init.mongo.js
 * mongo mongodb://user:pwd@xxx.mlab.com:33533/issuetracker 
 scripts/init.mongo.js
 */
-
 db.issues.remove({});
 
 const issuesDB = [
@@ -29,6 +28,9 @@ const issuesDB = [
 db.issues.insertMany(issuesDB);
 const count = db.issues.count();
 print('Insert', count, 'issues');
+
+db.counters.remove({ _id: 'issues' });
+db.counters.insert({ _id: 'issues', current: count });
 
 db.issues.createdIndex({ id: 1 }, { unique: true });
 db.issues.createdIndex({ status: 1 });
