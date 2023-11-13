@@ -5,10 +5,11 @@ const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const { MongoClient } = require('mongodb');
 
-const url = 'mongodb://127.0.0.1:27017/issuetracker';
+const url = 'mongodb://127.0.0.1/issuetracker';
 
-// Atlas URL - replace UUU with user, PPP with password, XXX with hostname
+// Atlas URL  - replace UUU with user, PPP with password, XXX with hostname
 // const url = 'mongodb+srv://UUU:PPP@cluster0-XXX.mongodb.net/issuetracker?retryWrites=true';
+
 // mLab URL - replace UUU with user, PPP with password, XXX with hostname
 // const url = 'mongodb://UUU:PPP@XXX.mlab.com:33533/issuetracker';
 
@@ -55,6 +56,15 @@ async function issueList() {
   return issues;
 }
 
+async function getNextSequence(name) {
+  const result = await db.collection('counters').findOneAndUpdate(
+    { _id: name },
+    { $inc: { current: 1 } },
+    { returnOriginal: false },
+  );
+  return result.value.current;
+}
+
 function issueValidate(issue) {
   const errors = [];
   if (issue.title.length < 3) {
@@ -68,20 +78,11 @@ function issueValidate(issue) {
   }
 }
 
-async function getNextSequence(name) {
-  const result = await db.collection('counters').findOneAndUpdate(
-    { _id: name },
-    { $inc: { current: 1 } },
-    { returnOriginal: false },
-  );
-  return result.value.current;
-}
-
 async function issueAdd(_, { issue }) {
-  const errors = [];
   issueValidate(issue);
   issue.created = new Date();
   issue.id = await getNextSequence('issues');
+
   const result = await db.collection('issues').insertOne(issue);
   const savedIssue = await db.collection('issues')
     .findOne({ _id: result.insertedId });
@@ -94,6 +95,7 @@ async function connectToDb() {
   console.log('Connected to MongoDB at', url);
   db = client.db();
 }
+
 const server = new ApolloServer({
   typeDefs: fs.readFileSync('./server/schema.graphql', 'utf-8'),
   resolvers,
@@ -109,7 +111,7 @@ app.use(express.static('public'));
 
 server.applyMiddleware({ app, path: '/graphql' });
 
-(async () => {
+(async function () {
   try {
     await connectToDb();
     app.listen(3000, function () {
