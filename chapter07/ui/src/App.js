@@ -83,7 +83,8 @@ class IssueAdd extends React.Component {
 
 async function graphQLFetch(query, variables = {}) {
   try {
-    const response = await fetch('http://localhost:3000/graphql', {
+    //links to backend localhost:3000
+    const response = await fetch(window.ENV.UI_API_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({ query, variables })
