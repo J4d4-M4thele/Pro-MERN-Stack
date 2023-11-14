@@ -89,6 +89,10 @@ class IssueAdd extends React.Component {
   }
 }
 
+IssueAdd.propTypes = {
+  createIssue: PropTypes.func.isRequired,
+};
+
 async function graphQLFetch(query, variables = {}) {
   try {
     //links to backend localhost:3000
