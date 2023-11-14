@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 
-const url = 'mongodb+srv://JadaMathele:kPfIAdYSqOfix3ap@testcluster1.wxdgvkq.mongodb.net/authorization-collection?retryWrites=true&w=majority/issuetracker';
+const url = 'mongodb+srv://JadaMathele:kPfIAdYSqOfix3ap@testcluster1.wxdgvkq.mongodb.net/issuetracker?retryWrites=true&w=majority';
 
 // Atlas URL  - replace UUU with user, PPP with password, XXX with hostname
 // const url = 'mongodb+srv://UUU:PPP@cluster0-XXX.mongodb.net/issuetracker?retryWrites=true';

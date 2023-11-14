@@ -9,6 +9,8 @@
  *   mongo mongodb://user:pwd@xxx.mlab.com:33533/issuetracker scripts/init.mongo.js
  */
 
+
+//RUN EACH COMMAND INDIVIDUALLY ON COMPASS SHELL
 db.issues.remove({});
 
 const issuesDB = [
