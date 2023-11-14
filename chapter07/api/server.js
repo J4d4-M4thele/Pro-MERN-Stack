@@ -16,7 +16,7 @@ const url = process.env.DB_URL || 'mongodb+srv://JadaMathele:kPfIAdYSqOfix3ap@te
 
 let db;
 
-let aboutMessage = "Issue Tracker API v1.0";
+let aboutMessage = 'Issue Tracker API v1.0';
 
 const GraphQLDate = new GraphQLScalarType({
   name: 'GraphQLDate',
@@ -26,13 +26,14 @@ const GraphQLDate = new GraphQLScalarType({
   },
   parseValue(value) {
     const dateValue = new Date(value);
-    return isNaN(dateValue) ? undefined : dateValue;
+    return Number.isNaN(dateValue.getTime()) ? undefined : dateValue;
   },
   parseLiteral(ast) {
     if (ast.kind == Kind.STRING) {
       const value = new Date(ast.value);
-      return isNaN(value) ? undefined : value;
+      return Number.isNaN(value.getTime()) ? undefined : value;
     }
+    return undefined;
   },
 });
 
@@ -49,7 +50,8 @@ const resolvers = {
 };
 
 function setAboutMessage(_, { message }) {
-  return aboutMessage = message;
+  aboutMessage = message;
+  return aboutMessage;
 }
 
 async function issueList() {
@@ -81,10 +83,11 @@ function issueValidate(issue) {
 
 async function issueAdd(_, { issue }) {
   issueValidate(issue);
-  issue.created = new Date();
-  issue.id = await getNextSequence('issues');
+  const newIssue = Object.assign({}, issue)
+  newIssue.created = new Date();
+  newIssue.id = await getNextSequence('issues');
 
-  const result = await db.collection('issues').insertOne(issue);
+  const result = await db.collection('issues').insertOne(newIssue);
   const savedIssue = await db.collection('issues')
     .findOne({ _id: result.insertedId });
   return savedIssue;
@@ -100,7 +103,7 @@ async function connectToDb() {
 const server = new ApolloServer({
   typeDefs: fs.readFileSync('schema.graphql', 'utf-8'),
   resolvers,
-  formatError: error => {
+  formatError: (error) => {
     console.log(error);
     return error;
   },
@@ -108,8 +111,8 @@ const server = new ApolloServer({
 
 const app = express();
 //enabling cors
-const enableCors = (process.env.ENABLE_CORS || 'true') = 'true';
-console.log('CORS setting', enableCors);
+const enableCors = (process.env.ENABLE_CORS || 'true') === 'true';
+console.log('CORS setting:', enableCors);
 
 server.applyMiddleware({ app, path: '/graphql', cors: enableCors });
 
@@ -124,4 +127,4 @@ const port = process.env.API_SERVER_PORT || 3000;
   } catch (err) {
     console.log('ERROR:', err);
   }
-})();
+}());
