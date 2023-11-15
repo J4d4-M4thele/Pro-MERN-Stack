@@ -6,6 +6,7 @@ const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const { MongoClient } = require('mongodb');
 const GraphQLDate = require('graphql_date.js');
+const about = require('about.js');
 
 const url = process.env.DB_URL || 'mongodb+srv://JadaMathele:kPfIAdYSqOfix3ap@testcluster1.wxdgvkq.mongodb.net/issuetracker?retryWrites=true&w=majority';
 
@@ -17,24 +18,19 @@ const url = process.env.DB_URL || 'mongodb+srv://JadaMathele:kPfIAdYSqOfix3ap@te
 
 let db;
 
-let aboutMessage = 'Issue Tracker API v1.0';
+
 
 const resolvers = {
   Query: {
-    about: () => aboutMessage,
+    about: about.getMessage,
     issueList,
   },
   Mutation: {
-    setAboutMessage,
+    setAboutMessage: about.setMessage,
     issueAdd,
   },
   GraphQLDate,
 };
-
-function setAboutMessage(_, { message }) {
-  aboutMessage = message;
-  return aboutMessage;
-}
 
 async function issueList() {
   const issues = await db.collection('issues').find({}).toArray();
