@@ -1,49 +1,15 @@
 const fs = require('fs');
-require('dotenv').config();
 const express = require('express');
 const { ApolloServer, UserInputError } = require('apollo-server-express');
-const { GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
-const { MongoClient } = require('mongodb');
+
 const GraphQLDate = require('graphql_date.js');
 const about = require('about.js');
 
 const url = process.env.DB_URL || 'mongodb+srv://JadaMathele:kPfIAdYSqOfix3ap@testcluster1.wxdgvkq.mongodb.net/issuetracker?retryWrites=true&w=majority';
 
-// Atlas URL  - replace UUU with user, PPP with password, XXX with hostname
-// const url = 'mongodb+srv://UUU:PPP@cluster0-XXX.mongodb.net/issuetracker?retryWrites=true';
-
-// mLab URL - replace UUU with user, PPP with password, XXX with hostname
-// const url = 'mongodb://UUU:PPP@XXX.mlab.com:33533/issuetracker';
-
-let db;
-
-
-
-const resolvers = {
-  Query: {
-    about: about.getMessage,
-    issueList,
-  },
-  Mutation: {
-    setAboutMessage: about.setMessage,
-    issueAdd,
-  },
-  GraphQLDate,
-};
-
 async function issueList() {
   const issues = await db.collection('issues').find({}).toArray();
   return issues;
-}
-
-async function getNextSequence(name) {
-  const result = await db.collection('counters').findOneAndUpdate(
-    { _id: name },
-    { $inc: { current: 1 } },
-    { returnOriginal: false },
-  );
-  return result.value.current;
 }
 
 function issueValidate(issue) {
@@ -71,28 +37,7 @@ async function issueAdd(_, { issue }) {
   return savedIssue;
 }
 
-async function connectToDb() {
-  const client = new MongoClient(url, { useNewUrlParser: true });
-  await client.connect();
-  console.log('Connected to MongoDB at', url);
-  db = client.db();
-}
-
-const server = new ApolloServer({
-  typeDefs: fs.readFileSync('schema.graphql', 'utf-8'),
-  resolvers,
-  formatError: (error) => {
-    console.log(error);
-    return error;
-  },
-});
-
 const app = express();
-//enabling cors
-const enableCors = (process.env.ENABLE_CORS || 'true') === 'true';
-console.log('CORS setting:', enableCors);
-
-server.applyMiddleware({ app, path: '/graphql', cors: enableCors });
 
 const port = process.env.API_SERVER_PORT || 3000;
 
