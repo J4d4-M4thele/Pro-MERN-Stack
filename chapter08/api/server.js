@@ -5,6 +5,7 @@ const { ApolloServer, UserInputError } = require('apollo-server-express');
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const { MongoClient } = require('mongodb');
+const GraphQLDate = require('graphql_date.js');
 
 const url = process.env.DB_URL || 'mongodb+srv://JadaMathele:kPfIAdYSqOfix3ap@testcluster1.wxdgvkq.mongodb.net/issuetracker?retryWrites=true&w=majority';
 
