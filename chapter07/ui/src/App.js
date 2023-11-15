@@ -20,8 +20,7 @@ class IssueFilter extends React.Component {
   }
 }
 
-function IssueRow({issue}) {
-  const issue = props.issue;
+function IssueRow({ issue }) {
   return (
     <tr>
       <td>{issue.id}</td>
@@ -35,10 +34,10 @@ function IssueRow({issue}) {
   );
 }
 
-function IssueTable({issues}) {
-  const issueRows = issues.map(issue =>
+function IssueTable({ issues }) {
+  const issueRows = issues.map(issue => (
     <IssueRow key={issue.id} issue={issue} />
-  );
+  ));
 
   return (
     <table className="bordered-table">
@@ -70,11 +69,12 @@ class IssueAdd extends React.Component {
     e.preventDefault();
     const form = document.forms.issueAdd;
     const issue = {
-      owner: form.owner.value, 
+      owner: form.owner.value,
       title: form.title.value,
-      due: new Date(new Date().getTime() + 1000*60*60*24*10),
-    }
-    const {createIssue} = this.props;
+      due: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 10),
+    };
+    const { createIssue } = this.props;
+    createIssue(issue);
     form.owner.value = ''; form.title.value = '';
   }
 
@@ -95,10 +95,9 @@ IssueAdd.propTypes = {
 
 async function graphQLFetch(query, variables = {}) {
   try {
-    //links to backend localhost:3000
     const response = await fetch(window.ENV.UI_API_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, variables }),
     });
     const body = await response.text();
@@ -159,7 +158,7 @@ class IssueList extends React.Component {
   }
 
   render() {
-    const {issues} = this.state;
+    const { issues } = this.state;
     return (
       <React.Fragment>
         <h1>Issue Tracker</h1>
