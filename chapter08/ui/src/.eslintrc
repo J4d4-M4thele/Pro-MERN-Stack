@@ -1,0 +1,11 @@
+{
+    "extends": "airbnb-base",
+    "env": {
+        "browser": true
+    },
+    "rules": {
+        "react/prop-types": "off"
+    }
+}
+// npx eslint . --ignore-pattern public
+//npx eslint . --ext js,jsx --ignore-pattern public
