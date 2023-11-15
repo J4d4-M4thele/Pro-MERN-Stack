@@ -1,9 +1,9 @@
-import graphQLFetch from "./graphQL.Fetch";
-import IssueList from "./IssueList";
+import 'babel-polyfill';
+import 'whatwg-fetch';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-IssueAdd.propTypes = {
-  createIssue: PropTypes.func.isRequired,
-};
+import IssueList from "./IssueList";
 
 const element = <IssueList />;
 

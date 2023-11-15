@@ -6,16 +6,21 @@
     "scripts": {
         "start": "nodemon -w uiserver.js -w .env uiserver.js",
         "lint": "eslint . --ext js,jsx --ignore-pattern public",
-        "compile":"webpack --mode production",
+        "compile": "webpack --mode production",
         "watch": "webpack --watch"
     },
     "author": "Jada Mathele",
     "license": "ISC",
     "homepage": "https://github.com/vasansr/pro-mern-stack-2",
     "dependencies": {
+        "babel-polyfill": "^6.26.0",
         "express": "^4.16.3",
         "http-proxy-middleware": "^0.21.0",
-        "nodemon": "^1.18.4"
+        "nodemon": "^1.18.4",
+        "prop-types": "^15.8.1",
+        "react": "^16.14.0",
+        "react-dom": "^16.14.0",
+        "whatwg-fetch": "^3.6.19"
     },
     "devDependencies": {
         "@babel/cli": "^7.0.0",
