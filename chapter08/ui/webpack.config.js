@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     mode: 'development',
-    entry: { app: './src/App.js' },
+    entry: { app: ['./src/App.js'] },
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'public'),
@@ -22,5 +22,6 @@ module.exports = {
             chunks: 'all',
         },
     },
+    devtool: 'source-map'
 };
  
