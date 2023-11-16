@@ -1,4 +1,5 @@
 import React from 'react';
+import URLSearchParams from 'url-search-params';
 
 import IssueFilter from './IssueFilter';
 import IssueTable from './IssueTable';
@@ -11,20 +12,28 @@ export default class IssueList extends React.Component {
       this.state = { issues: [] };
       this.createIssue = this.createIssue.bind(this);
     }
-  
+
+    componentDidUpdate(prevProps) {
+      const { location: {search: prevSearch} } = prevProps;
+      const { location: {search} } = this.props;
+      if(prevSearch !== search) {
+        this.loadData();
+      }
+    }
+
     componentDidMount() {
       this.loadData();
     }
   
     async loadData() {
-      const query = `query {
-        issueList {
+      const query = `query issueList($status: StatusType) {
+        issueList (status: $status) {
           id title status owner
           created effort due
         }
       }`;
   
-      const data = await graphQLFetch(query);
+      const data = await graphQLFetch(query, vars);
       if (data) {
         this.setState({ issues: data.issueList });
       }
