@@ -1,12 +1,10 @@
 {
-    "extends": "airbnb-base",
-    "env": {
-        "browser": true
-    },
-    "rules": {
-        "import/extensions": [ "error", "always", { "ignorePackages": true } ],
-        "react/prop-types": "off"
-    }
+  "extends": "airbnb",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "import/extensions": [ "error", "always", { "ignorePackages": true } ],
+    "react/prop-types": "off"
+  }
 }
-// npx eslint . --ignore-pattern public
-//npx eslint . --ext js,jsx --ignore-pattern public

@@ -2,17 +2,21 @@ import React from 'react';
 import URLSearchParams from 'url-search-params';
 import { Route } from 'react-router-dom';
 
-import IssueFilter from './IssueFilter';
-import IssueTable from './IssueTable';
-import IssueAdd from './IssueAdd';
-import IssueDetail from './IssueDetail';
-import graphQLFetch from './graphQLFetch';
+import IssueFilter from './IssueFilter.jsx';
+import IssueTable from './IssueTable.jsx';
+import IssueAdd from './IssueAdd.jsx';
+import IssueDetail from './IssueDetail.jsx';
+import graphQLFetch from './graphQLFetch.js';
 
 export default class IssueList extends React.Component {
   constructor() {
     super();
     this.state = { issues: [] };
     this.createIssue = this.createIssue.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadData();
   }
 
   componentDidUpdate(prevProps) {
@@ -23,17 +27,18 @@ export default class IssueList extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.loadData();
-  }
-
   async loadData() {
+    const { location: { search } } = this.props;
+    const params = new URLSearchParams(search);
+    const vars = {};
+    if (params.get('status')) vars.status = params.get('status');
+
     const query = `query issueList($status: StatusType) {
-        issueList (status: $status) {
-          id title status owner
-          created effort due
-        }
-      }`;
+      issueList (status: $status) {
+        id title status owner
+        created effort due
+      }
+    }`;
 
     const data = await graphQLFetch(query, vars);
     if (data) {
@@ -43,10 +48,10 @@ export default class IssueList extends React.Component {
 
   async createIssue(issue) {
     const query = `mutation issueAdd($issue: IssueInputs!) {
-        issueAdd(issue: $issue) {
-          id
-        }
-      }`;
+      issueAdd(issue: $issue) {
+        id
+      }
+    }`;
 
     const data = await graphQLFetch(query, { issue });
     if (data) {
