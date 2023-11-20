@@ -70,7 +70,6 @@ class IssueFilter extends React.Component {
   }
 
   render() {
-    //adding search parameters to the filter
     const { status, changed } = this.state;
     const { effortMin, effortMax } = this.state;
     return (
