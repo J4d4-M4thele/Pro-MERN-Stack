@@ -43,12 +43,16 @@ class IssueFilter extends React.Component {
   }
 
   applyFilter() {
-    const { status } = this.state;
+    const { status, effortMin, effortMax } = this.state;
     const { history } = this.props;
-    history.push({
-      pathname: '/issues',
-      search: status ? `?status=${status}` : '',
-    });
+
+    const params = new URLSearchParams();
+    if (status) params.set('status', status);
+    if (effortMin) params.set('effortMin', effortMin);
+    if (effortMax) params.set('status', effortMax);
+
+    const search = params.toString() ? `?${params.toString()}` : '';
+    history.push({ pathname: '/issues', search });
   }
 
   render() {
@@ -72,10 +76,10 @@ class IssueFilter extends React.Component {
         <button type='button' onClick={this.applyFilter}>
           Apply
         </button>
-        <button 
-        type='button' 
-        onClick={this.showOriginalFilter}
-        disabled={!changed}
+        <button
+          type='button'
+          onClick={this.showOriginalFilter}
+          disabled={!changed}
         >
           Reset
         </button>
