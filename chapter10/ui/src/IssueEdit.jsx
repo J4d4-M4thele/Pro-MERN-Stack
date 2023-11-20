@@ -113,6 +113,7 @@ export default class IssueEdit extends React.Component {
                   name="effort"
                   value={effort}
                   onChange={this.onChange}
+                  key={id}
                 />
               </td>
             </tr>
