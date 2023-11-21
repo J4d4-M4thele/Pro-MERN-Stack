@@ -12,6 +12,7 @@ export default class IssueDetail extends React.Component {
       toastMessage: '',
       toastType: 'info',
     };
+
     this.showError = this.showError.bind(this);
     this.dismissToast = this.dismissToast.bind(this);
   }
@@ -33,6 +34,7 @@ export default class IssueDetail extends React.Component {
       toastVisible: true, toastMessage: message, toastType: 'danger',
     });
   }
+
   dismissToast() {
     this.setState({ toastVisible: false });
   }
