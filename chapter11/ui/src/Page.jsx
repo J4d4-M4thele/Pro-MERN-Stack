@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   Navbar, Nav, NavItem, NavDropdown,
-  MenuItem, Glyphicon, Tooltip, OverlayTrigger, Grid
+  MenuItem, Glyphicon, Tooltip, OverlayTrigger,
+  Grid,
 } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
@@ -63,9 +64,11 @@ function Footer() {
 export default function Page() {
   return (
     <div>
-      <Grid fluid />
-      <Contents />
-      <Grid />
+      <NavBar />
+      <Grid fluid>
+        <Contents />
+      </Grid>
+      <Footer />
     </div>
   );
 }

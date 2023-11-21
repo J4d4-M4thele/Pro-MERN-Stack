@@ -130,7 +130,6 @@ export default class IssueList extends React.Component {
             <IssueFilter />
           </Panel.Body>
         </Panel>
-        <hr />
         <IssueTable
           issues={issues}
           closeIssue={this.closeIssue}

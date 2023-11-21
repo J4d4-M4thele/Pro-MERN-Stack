@@ -99,7 +99,7 @@ class IssueFilter extends React.Component {
           onChange={this.onChangeEffortMax}
         />
         {' '}
-        <Button bsStyle='primary' type="button" onClick={this.applyFilter}>
+        <Button bsStyle="primary" type="button" onClick={this.applyFilter}>
           Apply
         </Button>
         {' '}
