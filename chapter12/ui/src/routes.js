@@ -1,4 +1,4 @@
-import IssueList from "./IssueList";
+const IssueList = require("./IssueList");
 import IssueReport from "./IssueReport";
 import IssueEdit from "./IssueEdit";
 import About from "./About";

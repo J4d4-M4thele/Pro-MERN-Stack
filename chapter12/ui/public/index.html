@@ -1,5 +1,4 @@
-export default function template(body) {
-  return `<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 
 <head>
@@ -15,11 +14,11 @@ export default function template(body) {
 </head>
 
 <body>
-  <!-- Page generated from template. -->
-  <div id="contents">${body}</div>
+  <div id="contents"></div>
 
+  <script src="/env.js"></script>
+  <script src="/vendor.bundle.js"></script>
+  <script src="/app.bundle.js"></script>
 </body>
 
 </html>
-`;
-}

@@ -34,7 +34,7 @@ function NavBar() {
           noCaret
         >
           <LinkContainer to="/about">
-          <MenuItem>About</MenuItem>
+            <MenuItem>About</MenuItem>
           </LinkContainer>
         </NavDropdown>
       </Nav>
