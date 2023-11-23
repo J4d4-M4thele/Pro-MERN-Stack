@@ -11,8 +11,21 @@ import NumInput from './NumInput.jsx';
 import DateInput from './DateInput.jsx';
 import TextInput from './TextInput.jsx';
 import Toast from './Toast.jsx';
+import store from '/store.js';
 
 export default class IssueEdit extends React.Component {
+  static async fetchData(match, showError) {
+    const query = `query issue($id: Int!) {
+    issue(id: $id) {
+    id title status owner
+    effort created due description
+    }
+    }`;
+    const { params: { id } } = match;
+    const result = await graphQLFetch(query, { id }, showError);
+    return result;
+  }
+
   constructor() {
     super();
     this.state = {
