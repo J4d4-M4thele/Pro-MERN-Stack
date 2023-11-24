@@ -96,4 +96,4 @@ class IssueAddNavItem extends React.Component {
   }
 }
 
-export default withToast(IssueAddNavItem);
+export default withToast(withRouter(IssueAddNavItem));
