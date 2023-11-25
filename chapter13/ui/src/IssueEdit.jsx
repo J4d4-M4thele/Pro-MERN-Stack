@@ -262,17 +262,12 @@ class IssueEdit extends React.Component {
           {' | '}
           <Link to={`/edit/${id + 1}`}>Next</Link>
         </Panel.Footer>
-        <Toast
-          showing={toastVisible}
-          onDismiss={this.dismissToast}
-          bsStyle={toastType}
-        >
-          {toastMessage}
-        </Toast>
       </Panel>
     );
   }
 }
 
 const IssueEditWithToast = withToast(IssueEdit);
+IssueEditWithToast.fetchData = IssueEdit.fetchData;
+
 export default IssueEditWithToast;

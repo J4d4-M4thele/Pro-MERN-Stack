@@ -6,7 +6,6 @@ import IssueFilter from './IssueFilter.jsx';
 import IssueTable from './IssueTable.jsx';
 import IssueDetail from './IssueDetail.jsx';
 import graphQLFetch from './graphQLFetch.js';
-import React from 'react';
 import withToast from './withToast.jsx';
 import store from './store.js';
 
@@ -117,9 +116,9 @@ class IssueList extends React.Component {
     const query = `mutation issueDelete($id: Int!) {
       issueDelete(id: $id)
     }`;
-    const { showSuccess, showError } = this.props;
     const { issues } = this.state;
     const { location: { pathname, search }, history } = this.props;
+    const { showSuccess, showError } = this.props;
     const { id } = issues[index];
     const data = await graphQLFetch(query, { id }, showError);
     if (data && data.issueDelete) {
@@ -131,7 +130,7 @@ class IssueList extends React.Component {
         newList.splice(index, 1);
         return { issues: newList };
       });
-      this.showSuccess(`Deleted issue ${id} successfully.`);
+      showSuccess(`Deleted issue ${id} successfully.`);
     } else {
       this.loadData();
     }
@@ -140,6 +139,7 @@ class IssueList extends React.Component {
   render() {
     const { issues } = this.state;
     if (issues == null) return null;
+
     const { selectedIssue } = this.state;
     return (
       <React.Fragment>
@@ -162,7 +162,7 @@ class IssueList extends React.Component {
   }
 }
 
-const IssueListWithToast =  withToast(IssueList);
+const IssueListWithToast = withToast(IssueList);
 IssueListWithToast.fetchData = IssueList.fetchData;
 
 export default IssueListWithToast;

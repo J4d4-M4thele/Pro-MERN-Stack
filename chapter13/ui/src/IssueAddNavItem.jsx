@@ -41,6 +41,7 @@ class IssueAddNavItem extends React.Component {
         id
       }
     }`;
+
     const { showError } = this.props;
     const data = await graphQLFetch(query, { issue }, showError);
     if (data) {

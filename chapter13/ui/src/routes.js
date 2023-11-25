@@ -4,11 +4,9 @@ import IssueEdit from './IssueEdit.jsx';
 import About from './About.jsx';
 import NotFound from './NotFound.jsx';
 
-import withToast from './withToast.jsx';
-
 const routes = [
   { path: '/issues/:id?', component: IssueList },
-  { path: '/edit/:id', component: withToast(IssueEdit) },
+  { path: '/edit/:id', component: IssueEdit },
   { path: '/report', component: IssueReport },
   { path: '/about', component: About },
   { path: '*', component: NotFound },
