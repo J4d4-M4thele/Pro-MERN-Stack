@@ -10,7 +10,7 @@ const url = 'mongodb+srv://JadaMathele:kPfIAdYSqOfix3ap@testcluster1.wxdgvkq.mon
 
 function testWithCallbacks(callback) {
   console.log('\n--- testWithCallbacks ---');
-  const client = new MongoClient(url, { useNewUrlParser: true });
+  const client = new MongoClient(url);
   client.connect(function(err, client) {
     if (err) {
       callback(err);
