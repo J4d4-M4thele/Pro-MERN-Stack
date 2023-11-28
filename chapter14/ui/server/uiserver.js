@@ -45,7 +45,7 @@ if (!process.env.UI_SERVER_API_ENDPOINT) {
 }
 
 app.get('/env.js', (req, res) => {
-  const env = { 
+  const env = {
     UI_API_ENDPOINT: process.env.UI_API_ENDPOINT,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   };
