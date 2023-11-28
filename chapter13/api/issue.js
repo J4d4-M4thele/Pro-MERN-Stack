@@ -29,7 +29,7 @@ async function list(_, { status, effortMin, effortMax, page, }) {
   const totalCount = await cursor.count(false);
   const issues = cursor.toArray();
   const pages = Math.ceil(totalCount / PAGE_SIZE);
-  return {issues, pages};
+  return { issues, pages };
 }
 
 function validate(issue) {
@@ -117,11 +117,26 @@ async function counts(_, { status, effortMin, effortMax }) {
   return Object.values(stats);
 }
 
+async function restore(_, { id }) {
+  const db = getDb();
+  const issue = await db.collection('deleted_issues').findOne({ id });
+  if (!issue) return false;
+  issue.deleted = new Date();
+
+  let result = await db.collection('issues').insertOne(issue);
+  if (result.insertedId) {
+    result = await db.collection('deleted_issues').removeOne({ id });
+    return result.deletedCount === 1;
+  }
+  return false;
+}
+
 module.exports = {
   list,
   add,
   get,
   update,
   delete: remove,
+  restore,
   counts,
 };
