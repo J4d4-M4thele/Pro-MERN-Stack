@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
-const url = process.env.DB_URL || 'mongodb+srv://JadaMathele:kPfIAdYSqOfix3ap@testcluster1.wxdgvkq.mongodb.net/issuetracker?retryWrites=true&w=majority';
+const url = process.env.DB_URL || 'mongodb://localhost/issuetracker';
 
 function testWithCallbacks(callback) {
   console.log('\n--- testWithCallbacks ---');
@@ -24,17 +24,17 @@ function testWithCallbacks(callback) {
         return;
       }
       console.log('Result of insert:\n', result.insertedId);
-      collection.find({ _id: result.insertedId})
+      collection.find({ _id: result.insertedId })
         .toArray((findErr, docs) => {
-        if (findErr) {
+          if (findErr) {
+            client.close();
+            callback(findErr);
+            return;
+          }
+          console.log('Result of find:\n', docs);
           client.close();
-          callback(findErr);
-          return;
-        }
-        console.log('Result of find:\n', docs);
-        client.close();
-        callback();
-      });
+          callback();
+        });
     });
   });
 }
@@ -55,7 +55,7 @@ async function testWithAsync() {
     const docs = await collection.find({ _id: result.insertedId })
       .toArray();
     console.log('Result of find:\n', docs);
-  } catch(err) {
+  } catch (err) {
     console.log(err);
   } finally {
     client.close();
